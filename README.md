@@ -1,6 +1,12 @@
 плюс цифры и модель v4
 минус эхо
 
+```bash
+git clone https://github.com/tauuu/silero-ha-http-tts.git
+cd silero-ha-http-tts.git
+
+make && make run
+```
 
 # silero-ha-http-tts
 Этот проект я сделал для себя, чтобы обеспечить свой умный дом синтезом речи, который может работать автономно, без облачных провайдеров.
