@@ -13,12 +13,12 @@ import torch
 import hashlib
 import pprint
 
-from normalization import NormText
+from _normalization import NormText
 
 device = torch.device('cpu')
 torch.set_num_threads(4)
 local_file = 'model.pt'
-speaker = 'xenia'  # 'aidar', 'baya', 'kseniya', 'xenia', 'random'
+speaker = 'kseniya'  # 'aidar', 'baya', 'kseniya', 'xenia', 'random'
 sample_rate = 48000  # 8000, 24000, 48000
 
 model = torch.package.PackageImporter(local_file).load_pickle("tts_models", "model")
@@ -56,11 +56,11 @@ async def tts(request: Request):
     wav_file = "./static/"+audio_path
 
     # (text=None, ssml_text=None, speaker: str = 'xenia', audio_path: str = '', sample_rate: int = 48000, put_accent=True, put_yo=True)
-    res_path = model.save_wav(text=text_norm, speaker=speaker, audio_path=orig_wav_file, sample_rate=sample_rate)
-    command_eff =(f'sox {orig_wav_file} {wav_file} reverb 50 50 100')
+    res_path = model.save_wav(text=text_norm, speaker=speaker, audio_path=wav_file, sample_rate=sample_rate)
+    #command_eff =(f'sox {orig_wav_file} {wav_file} reverb 50 50 100')
 
     #print(command_mp3)
-    os.system(command_eff)
+    os.system(wav_file)
 
     def iterfile():  # 
         with open(wav_file, mode="rb") as file_like:
@@ -87,7 +87,7 @@ async def tts(request: Request):
 
     # (text=None, ssml_text=None, speaker: str = 'xenia', audio_path: str = '', sample_rate: int = 48000, put_accent=True, put_yo=True)
     res_path = model.save_wav(ssml_text=f'<speak><break time="1s"/>{text_norm}<break time="1s"/></speak>', speaker=speaker, audio_path=wav_file, sample_rate=sample_rate)
-    command_mp3 =(f'sox {wav_file} {wav_file}.mp3 reverb 50 50 100')
+    command_mp3 =(f'sox {wav_file} {wav_file}.mp3')
 # sox f2btrop6.0.wav f2btr.mp3 reverb 50 50 10
 
     #print(command_mp3)
