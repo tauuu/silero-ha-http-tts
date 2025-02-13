@@ -6,6 +6,24 @@ git clone https://github.com/tauuu/silero-ha-http-tts.git
 cd silero-ha-http-tts.git
 
 make && make run
+
+
+
+
+
+docker stop tts_silero
+docker rm tts_silero
+
+find / -type f -name *.wav
+rm -rf /var/lib/docker/overlay2/61505e08466083a321de2288361c92d256963159ec6a03858150248dff7a526b/diff/usr/app/static/
+
+docker run -d --restart unless-stopped -p 9898:80  --name tts_silero silero
+
+docker exec -it tts_silero ls static
+
+
+docker ps -a
+
 ```
 
 # silero-ha-http-tts
